@@ -1,0 +1,13 @@
+
+	<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= link_to drug.name, drug %>
+	</td>
+	<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= drug.amount %>
+	</td>
+	<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= drug.price %>
+	</td>
+	<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= deadline(drug) %>
+	</td>
+	<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= drug.company %>
+	</td>
+	<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= is_expired?(drug) %>
+	</td>

@@ -1,0 +1,61 @@
+<div class="px-4 sm:px-6 lg:px-8 w-full">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-base font-semibold leading-6 text-gray-900">Drugs</h1>
+      <p class="mt-2 text-sm text-gray-700">A list of all the drugs.</p>
+    </div>
+    <div class="w-auto flex justify-space">
+      <%= form_with url: drugs_path, multipart: true do |form| %>
+        <div class="mt-4 sm:mt-0 flex ">
+          <%= form.file_field :csv, name: 'drug[csv]', class: "block
+                                                              w-full
+                                                              text-sm
+                                                              text-slate-500
+                                                              file:mr-4
+                                                              file:py-2
+                                                              file:px-4
+                                                              file:rounded-full
+                                                              file:border-0
+                                                              file:text-sm
+                                                              file:font-semibold
+                                                              file:bg-indigo-50
+                                                              file:text-indigo-700
+                                                              hover:file:bg-indigo-100" %>
+        <button type="submit" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Drugs</button>
+        </div>
+      <%end%>
+    </div>
+  </div>
+  <div>
+    <%= render 'filter', query: @query %>
+  </div>
+    <div class="mt-8 flow-root">
+      <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead>
+              <tr>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"><%= sort_link(@query, :name, 'Name', default_order: :desc) %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= sort_link(@query, :amount, 'Amount', default_order: :desc) %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= sort_link(@query, :price, 'Price', default_order: :desc) %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= sort_link(@query, :deadline, 'deadline', default_order: :desc) %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= sort_link(@query, :company, 'Company', default_order: :desc) %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Is Expired</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <% @drugs.each do |drug| %> 
+                <tr>
+                  <%= render 'drug', drug: %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+  <div class="flex mt-10">
+    <%= paginate @drugs, views_prefix: 'shared' %>
+  </div>
+</div>
+

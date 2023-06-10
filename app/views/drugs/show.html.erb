@@ -1,0 +1,76 @@
+<div class="flex flex-col w-full">
+  <div>
+  <div class="px-4 sm:px-0">
+    <h3 class="text-base font-semibold leading-7 text-gray-900">Drug Information</h3>
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500"></p>
+  </div>
+  <div class="mt-6 border-t border-gray-100">
+    <dl class="divide-y divide-gray-100">
+      <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Name</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @drug.name %></dd>
+      </div>
+      <div class="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Amount</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @drug.amount %></dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Price</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @drug.price %></dd>
+      </div>
+      <div class="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Deadline</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= deadline(@drug) %></dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Company</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @drug.company %></dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+        <dt class="text-sm font-medium leading-6 text-gray-900">About</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @drug.description %></dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div>
+  <div>
+    <%= render 'filter', query: @query %>
+  </div>
+  <div>
+    <p>Total amount: <%= @total_amount %></p>
+    <p>Total price: <%= @total_price %></p>
+    <p>countity: <%= @countity %> </p>
+  </div>
+    <div class="mt-8 flow-root">
+      <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead>
+              <tr>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"><%= sort_link(@query, :name, 'Name', default_order: :desc) %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= sort_link(@query, :amount, 'Amount', default_order: :desc) %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= sort_link(@query, :price, 'Price', default_order: :desc) %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= sort_link(@query, :deadline, 'deadline', default_order: :desc) %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><%= sort_link(@query, :company, 'Company', default_order: :desc) %></th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Is Expired</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <tr> 
+                  <% @drugs_with_same_name.each do |drug| %>
+                     <%= render 'drug', drug: %>
+                  <% end %>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+  <div class="flex mt-10">
+    <%= paginate @drugs_with_same_name, views_prefix: 'shared' %>
+  </div>
+</div>
+
+</div>

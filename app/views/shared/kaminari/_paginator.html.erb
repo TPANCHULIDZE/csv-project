@@ -1,0 +1,14 @@
+
+<%= paginator.render do -%>
+    <%= prev_page_tag %> 
+    <div class=" md:-mt-px md:flex">
+    <% each_page do |page| -%>
+      <% if page.display_tag? -%>
+        <%= page_tag page %>
+      <% elsif !page.was_truncated? -%>
+        <%= gap_tag %>
+      <% end -%>
+    <% end -%>
+    </div>
+    <%= next_page_tag %>
+<% end -%>
