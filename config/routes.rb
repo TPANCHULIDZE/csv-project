@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   root 'drugs#index'
 
   resources :drugs, except: %i[update edit new]
+  get 'drugs/companies/:company', to: 'drugs#companies', as: :companies_drugs
 end

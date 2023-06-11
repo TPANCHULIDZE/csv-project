@@ -7,7 +7,9 @@
 	</td>
 	<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= deadline(drug) %>
 	</td>
-	<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= drug.company %>
+	<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= link_to drug.company, companies_drugs_path(drug.company) %>
 	</td>
-	<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= is_expired?(drug) %>
+	<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= expired?(drug) %>
+	</td>
+		<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= button_to 'Delete', drug, method: :delete %>
 	</td>

@@ -16,30 +16,51 @@ class DrugsController < ApplicationController
     @drugs_with_same_name = @query.result
                                   .where(name: @drug.name)
 
-    @total_price = @drugs_with_same_name.sum('price')
-    @total_amount = @drugs_with_same_name.sum('amount')
-    @countity = @drugs_with_same_name.size
+    total(@drugs_with_same_name)
 
     @drugs_with_same_name = paginate_drugs @drugs_with_same_name.where
                                                                 .not(id: @drug)
   end
 
+  def companies
+    @query = Drug.ransack(params[:query])
+    @drugs_from_same_company = @query.result.where(company: params[:company])
+
+    total(@drugs_from_same_company)
+    @company_name = params[:company]
+    @drugs_from_same_company = paginate_drugs @drugs_from_same_company
+  end
+
   def create
     csv_parser = CsvParser.new
 
-    csv_parser.call(drug_params[:csv])
+    countity = csv_parser.call(drug_params[:csv])
 
-    redirect_to drugs_path
-  rescue StandardError => e
-    Rails.logger.debug e
-    redirect_to new_drug_path, status: :unprocessable_entity
+    if countity.positive?
+      redirect_to drugs_path, notice: "create or update #{countity} new drug#{countity > 1 ? 's' : ''}"
+    else
+      redirect_to drugs_path, status: :unprocessable_entity, alert: 'drugs already exist or some info is incorrect'
+    end
+  rescue StandardError => _e
+    redirect_to drugs_path, status: :unprocessable_entity, alert: 'csv file info is incorrect'
   end
 
   def destroy
-    @drug.destroy
+    name = @drug&.name
+    if @drug&.destroy
+      redirect_to drugs_path, notice: "delete #{name}"
+    else
+      redirect_to drugs_path, status: :unprocessable_entity, alert: 'something is wrong'
+    end
   end
 
   private
+
+  def total(drugs)
+    @total_amount = drugs.sum('amount')
+    @total_price = drugs.sum('price * amount')
+    @countity = drugs.size
+  end
 
   def drug_params
     params.require(:drug).permit(:csv)

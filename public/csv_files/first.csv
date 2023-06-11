@@ -1,4 +1,5 @@
 name;amount;price;company;deadline;description
-firsta_drug;10;13.2;comp1;25/12/2023;this is first drug
-sec_drug;12;15;comp2;12/1/2024;this is second drug
-thissa_drug;9;0.3;comp1;7/5/2023;this is third drug
+first;10;13.2;comp1;25/12/2023;this is first drug
+second;12;15;comp2;12/1/2024;this is second drug
+third;9;0.3;comp1;7/5/2023;this is third drug
+fourth;10;11;comp3;7/7/2024;this is fourth drug
